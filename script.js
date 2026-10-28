@@ -1,19 +1,26 @@
-const WA_NUMBER = "6285154810966";
-const waBase = "https://wa.me/" + WA_NUMBER;
-document.querySelectorAll(".order-link").forEach(link => {
-  const product = link.dataset.product || "produk";
-  link.href = waBase + "?text=" + encodeURIComponent("Halo Mochi Store, aku mau tanya harga dan ketersediaan " + product + ".");
-  link.target = "_blank";
-  link.rel = "noopener";
-});
-document.querySelectorAll(".filter").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
-    button.classList.add("active");
-    const category = button.dataset.filter;
-    document.querySelectorAll(".product-card").forEach(card => {
-      card.hidden = category !== "semua" && card.dataset.category !== category;
-    });
-  });
-});
-document.getElementById("year").textContent = new Date().getFullYear();
+const waNumber = "6281234567890"; // Ganti dengan nomormu
+
+function orderWA(type) {
+    const uid = document.getElementById('uid').value;
+    const app = document.getElementById('app').value;
+    
+    let text = type === 'topup' 
+        ? `Halo Mochi Store! 🌸%0AMau order Top Up untuk ID: ${uid}` 
+        : `Halo Mochi Store! 🌸%0AMau beli aplikasi: ${app}`;
+        
+    window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
+}
+
+async function orderAPI() {
+    const target = document.getElementById('target').value;
+    const statusText = document.getElementById('status');
+    
+    if(!target) return alert("Username tidak boleh kosong! 🌸");
+    statusText.innerText = "⏳ Sedang memproses ke server...";
+    
+    // Tempatkan logika fetch API ke backend Node.js (Pterodactyl) di sini 
+    // agar API Key SMM kamu tidak bocor di HTML publik.
+    setTimeout(() => {
+        statusText.innerText = "✅ Pesanan berhasil diproses oleh sistem!";
+    }, 1500);
+}
